@@ -1,24 +1,24 @@
-import logo from './logo.svg';
+import { React, useState } from "react";
+import SearchBar from "./SearchBar";
+import List from "./List";
+import { QueryClient, QueryClientProvider } from 'react-query';
 import './App.css';
 
+const queryClient = new QueryClient();
+
 function App() {
+  const [searchText, setSearchText] = useState('');
+  const handleSearch = (text) => {
+    setSearchText(text);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <div className="App">
+        <SearchBar onSearch={handleSearch}/>
+        <List searchText={searchText} />
+      </div>
+    </QueryClientProvider>
   );
 }
 
